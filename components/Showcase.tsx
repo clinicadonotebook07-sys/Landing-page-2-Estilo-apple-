@@ -1,16 +1,48 @@
 import React, { useRef } from 'react';
 import { Section } from './ui/Section';
 import { SectionId } from '../types';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Eye } from 'lucide-react';
 
+// Dados configurados para buscar imagens locais primeiro
+// Caminho esperado: public/img/nome-do-arquivo.png
 const niches = [
-  { name: "Jurídico", image: "https://picsum.photos/seed/law/600/800", desc: "Advogados e Escritórios" },
-  { name: "Consultório", image: "https://picsum.photos/seed/doctor/600/800", desc: "Médicos e Dentistas" },
-  { name: "Arquitetura", image: "https://picsum.photos/seed/arch/600/800", desc: "Arquitetos e Design" },
-  { name: "Marketing", image: "https://picsum.photos/seed/marketing/600/800", desc: "Agências e Freelancers" },
-  { name: "Engenharia", image: "https://picsum.photos/seed/eng/600/800", desc: "Construtoras e Civil" },
-  { name: "Consultoria", image: "https://picsum.photos/seed/consult/600/800", desc: "Mentores e Coaches" },
+  { 
+    name: "Jurídico", 
+    local: "/img/juridico.png", 
+    backup: "https://picsum.photos/seed/law/600/800", 
+    desc: "Advogados e Escritórios" 
+  },
+  { 
+    name: "Consultório", 
+    local: "/img/consultorio.png", 
+    backup: "https://picsum.photos/seed/doctor/600/800", 
+    desc: "Médicos e Dentistas" 
+  },
+  { 
+    name: "Arquitetura", 
+    local: "/img/arquitetura.png", 
+    backup: "https://picsum.photos/seed/arch/600/800", 
+    desc: "Arquitetos e Design" 
+  },
+  { 
+    name: "Marketing", 
+    local: "/img/marketing.png", 
+    backup: "https://picsum.photos/seed/marketing/600/800", 
+    desc: "Agências e Freelancers" 
+  },
+  { 
+    name: "Engenharia", 
+    local: "/img/engenharia.png", 
+    backup: "https://picsum.photos/seed/eng/600/800", 
+    desc: "Construtoras e Civil" 
+  },
+  { 
+    name: "Consultoria", 
+    local: "/img/consultoria.png", 
+    backup: "https://picsum.photos/seed/consult/600/800", 
+    desc: "Mentores e Coaches" 
+  },
 ];
 
 export const Showcase: React.FC = () => {
@@ -44,10 +76,17 @@ export const Showcase: React.FC = () => {
             viewport={{ once: true }}
           >
             <div className="aspect-[3/4] rounded-2xl overflow-hidden relative shadow-lg bg-gray-100">
+               {/* Sistema Inteligente: Local -> Backup */}
                <img 
-                 src={niche.image} 
+                 src={niche.local} 
                  alt={niche.name} 
                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                 onError={(e) => {
+                   const target = e.currentTarget;
+                   if (target.src !== niche.backup) {
+                     target.src = niche.backup;
+                   }
+                 }}
                />
                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-full flex items-center gap-2">
