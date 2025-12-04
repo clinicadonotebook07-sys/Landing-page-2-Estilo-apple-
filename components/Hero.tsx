@@ -4,6 +4,10 @@ import { Button } from './ui/Button';
 import { SectionId } from '../types';
 import { ArrowRight, Star, ImageOff } from 'lucide-react';
 
+// Tenta importar a imagem localmente da pasta components
+// @ts-ignore: Ignora erro de TS caso não haja definição para .png
+import heroImg from './hero.png';
+
 export const Hero: React.FC = () => {
   const scrollToContact = () => {
     document.getElementById(SectionId.CONTACT)?.scrollIntoView({ behavior: 'smooth' });
@@ -48,7 +52,7 @@ export const Hero: React.FC = () => {
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white min-h-[300px] md:min-h-[500px] flex items-center justify-center bg-gray-50 group">
             {/* Imagem Principal */}
             <img 
-              src="/hero.png" 
+              src={heroImg} 
               alt="Interface de Criação de Sites com IA" 
               className="w-full h-auto block hover:scale-105 transition-transform duration-[2s]"
               loading="eager" // Carregamento prioritário
@@ -62,7 +66,7 @@ export const Hero: React.FC = () => {
             <div className="absolute inset-0 flex-col items-center justify-center text-gray-400 hidden group-[.fallback-active]:flex">
                <ImageOff size={48} className="mb-4 opacity-50" />
                <p className="text-sm font-medium">Imagem não carregada</p>
-               <p className="text-xs mt-1">Verifique se o arquivo <b>hero.png</b> está na pasta correta.</p>
+               <p className="text-xs mt-1">Verifique se <b>hero.png</b> está na pasta <b>components</b>.</p>
             </div>
             
             {/* Floating Badge */}
